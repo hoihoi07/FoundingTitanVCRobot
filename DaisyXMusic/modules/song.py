@@ -39,7 +39,7 @@ from DaisyXMusic.config import DURATION_LIMIT
 from DaisyXMusic.modules.play import arq
 
 
-# @Client.on_message(filters.command("song") & ~filters.channel)
+@Client.on_message(filters.command("song") & ~filters.channel)
 def song(client, message):
 
     user_id = message.from_user.id
@@ -63,6 +63,8 @@ def song(client, message):
         open(thumb_name, "wb").write(thumb.content)
 
         duration = results[0]["duration"]
+        url_suffix = results[0]["url_suffix"]
+        views = results[0]["views"]
         results[0]["url_suffix"]
         results[0]["views"]
 
@@ -76,7 +78,7 @@ def song(client, message):
             info_dict = ydl.extract_info(link, download=False)
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
-        rep = "**🎵 Uploaded by **"
+        rep = "🎙 **Title**: [{title[:35]}]({link})\n🎬 **Source**: YouTube\n⏱️ **Duration**: `{duration}`\n👁‍🗨 **Views**: `{views}`\n🎵 Uploaded by @FoundingTitabRobot **"
         secmul, dur, dur_arr = 1, 0, duration.split(":")
         for i in range(len(dur_arr) - 1, -1, -1):
             dur += int(dur_arr[i]) * secmul
